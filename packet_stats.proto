@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+message PacketStats {
+  enum Role {
+    SOURCE = 0;
+    SINK = 1;
+  }
+  Role role = 1;
+  uint64 block_number = 2;
+  uint32 color = 3;
+  uint64 counter0 = 4;
+  uint64 counter1 = 5;
+  uint32 interval = 6;
+}
+
+message PacketStatsPush {
+  PacketStats stats = 1;
+}
+
+message PacketStatsPushResult {
+  bool error = 1;
+  string message = 2;
+}
+
+service PacketStatsCollector {
+  rpc get (PacketStatsPush) returns (PacketStatsPushResult) {}
+}
